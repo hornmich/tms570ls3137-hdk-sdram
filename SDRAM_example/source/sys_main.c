@@ -10,6 +10,45 @@
 /* (c) Texas Instruments 2009-2014, All rights reserved. */
 
 /* USER CODE BEGIN (0) */
+
+/**
+ * HAL Code Generator settings:
+ * 	on tab TMS570LS3137ZWT
+ * 		on tab Driver Enable
+ * 			check Enable EMIF driver
+ * 			check Enable SCI2 driver
+ * 		on tab R4-MPU-PMU
+ * 			check enable Region 6 Configuration
+ * 			uncheck all Disable Sub-Region
+ * 			set base 0x80000000
+ * 			set size: 8_MB
+ * 			set type: STRONGLYORDERED_SHARABLE
+ * 			set permission: PRIV_RW_USER_RW_EXEC
+ * 	on tab PINMUX
+ * 		check EMIF
+ * 		check Gate off EMIF_CLK output
+ * 	on tab EMIF
+ * 		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 		!!!!! APPLY ONLY FOR ISSI IS 442S16400F SDRAM CHIP !!!!!
+ * 		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 		on tab EMIF General
+ * 			check Enable EMIF SDRAM
+ * 		on tab EMIF SDRAM
+ * 			t(rc or trfc): 63ns
+ * 			t(rp): 20ns
+ * 			t(rcd): 20ns
+ * 			t(wr) or t(rdl): 11ns
+ * 			t(ras): 42ns
+ * 			t(rc): 63ns
+ * 			t(rrd): 14ns
+ * 			t(xsr): 70ns
+ * 			Refresh Period 64ns
+ * 			Refresh Cycles: 4096
+ * 			CAS Latency: 3
+ * 			Banks: 4
+ * 			Page size 256
+ */
+
 /* USER CODE END */
 
 /* Include Files */
