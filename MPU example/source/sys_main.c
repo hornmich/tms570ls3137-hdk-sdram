@@ -20,6 +20,7 @@
 #include "system.h"
 #include "sys_mpu.h"
 #include "sci.h"
+#include "stdio.h"
 /* USER CODE END */
 
 /** @fn void main(void)
@@ -32,96 +33,82 @@
 
 /* USER CODE BEGIN (2) */
 void sciDisplayText(sciBASE_t *sci, uint8 *text, uint32 length);
-void wait(uint32 time);
+void inline wait_forever();
+
+#define MPU_ERR_NUMBER_OF_REGIONS 0x00000001
+#define MPU_ERR_REGION_SELECTION 0x00000002
+#define MPU_ERR_REGION_BASE_ADDRESS 0x00000004
+#define MPU_ERR_REGION_TYPE 0x00000008
+#define MPU_ERR_REGION_PERMISSION 0x00000010
+#define SDRAM_BASE_ADDRESS 0x80000000
 
 #define UART scilinREG
-#define  TSIZE1 9
-uint8  TEXT1[TSIZE1]= {'R','u','n','i','n','g','.','.','.'};
 /* USER CODE END */
 
 void main(void)
 {
 /* USER CODE BEGIN (3) */
-    uint32 No_Of_MPU_Region = 0;
-    uint32 error = 0;
-    sciInit();
-    sciDisplayText(UART,&TEXT1[0],TSIZE1);   /* send text code 1 */
+	uint32 No_Of_MPU_Region = 0;
+	uint32 error = 0;
+	sciInit();
 
-    /* Initialize memory protection unit.
-     * Region configurations are selected using MPU Tab in HALCoGen.
-     * MPU is enabled in mpuInit function if "Enable MPU" in GUI is selected */
-    _mpuInit_();
+	/* Initialize memory protection unit.
+	* Region configurations are selected using MPU Tab in HALCoGen.
+	* MPU is enabled in mpuInit function if "Enable MPU" in GUI is selected */
+	_mpuInit_();
 
-    /* This function disables memory protection unit.
-     * Added just to show how to disable MPU */
-    _mpuDisable_();
+	/* This function returns the number of implemented mpu regions. */
+	No_Of_MPU_Region = _mpuGetNumberOfRegions_();
 
-    /* This function Enables memory protection unit.
-     * Added just to show how to enable MPU, mpuInit function
-     * will enable MPU if "Enable MPU" in GUI selected */
-    _mpuEnable_();
+	/* Check that device supports 12 Region. */
+	if(No_Of_MPU_Region != 12) {
+		error |= MPU_ERR_NUMBER_OF_REGIONS;
+	}
+	/* Select MPU Region 1 */
+	_mpuSetRegion_(mpuREGION6);
 
-    /* This function returns the number of implemented mpu regions. */
-    No_Of_MPU_Region = _mpuGetNumberOfRegions_();
-
-	   /* Check that device supports 12 Region. */
-	   if(No_Of_MPU_Region != 12)
-	   {
-	      /* Check the device */
-       asm("	nop");
-       error |= 0x00000001;
-	   }
-    /* Select MPU Region 1 */
-    _mpuSetRegion_(mpuREGION1);
-
-    /* Check whether MPU Region 1 is selected */
-    if(_mpuGetRegion_() != mpuREGION1)
-    {
-       /*Region 1 was Not selected */
-       asm("	nop");
-       error |= 0x00000002;
-    }
-    /* Check the Base address configured for MPU Region 1 */
-    else if(_mpuGetRegionBaseAddress_() != 0x00000000)
-    {
-       /*Region 1 Base address wrong */
-       asm("	nop");
-       error |= 0x00000004;
-    }
-    /* Check the Type configured for MPU Region 1 */
-    else if(_mpuGetRegionType_() != MPU_NORMAL_OINC_NONSHARED)
-    {
-       /*Region 1 Type configured wrong */
-       asm("	nop");
-       error |= 0x00000008;
-    }
-    /* Check the Permission configured for MPU Region 1 */
-    else if(_mpuGetRegionPermission_() != MPU_PRIV_NA_USER_NA_NOEXEC)
-    {
-       /*Region 1 Permission configured wrong */
-       asm("	nop");
-       error |= 0x00000010;
-    }
-    else
-    {
-       /* Region 1 Configurations are checked,
-        * Matches MPU configuration through HALCoGen GUI */
-       asm("	nop");
-    }
-
-    /* This function disables memory protection unit.
-     * Added just to show how to disable MPU */
-    _mpuDisable_();
+	/* Check whether MPU Region 6 is selected */
+	if(_mpuGetRegion_() != mpuREGION6) {
+		/* Region 6 was Not selected */
+		error |= MPU_ERR_REGION_SELECTION;
+	}
+	/* Check the Base address configured for MPU Region 6 */
+	else if(_mpuGetRegionBaseAddress_() != SDRAM_BASE_ADDRESS) {
+		/*Region 6 Base address wrong */
+		error |= MPU_ERR_REGION_BASE_ADDRESS;
+	}
+	/* Check the Type configured for MPU Region 6 */
+	else if(_mpuGetRegionType_() != MPU_STRONGLYORDERED_SHAREABLE) {
+		/*Region 6 Type configured wrong */
+		error |= MPU_ERR_REGION_TYPE;
+	}
+	/* Check the Permission configured for MPU Region 6 */
+	else if(_mpuGetRegionPermission_() != MPU_PRIV_RW_USER_RW_EXEC) {
+		/*Region 6 Permission configured wrong */
+		error |= MPU_ERR_REGION_PERMISSION;
+	}
+	else {
+		/* Region 1 Configurations are checked,
+		* Matches MPU configuration through HALCoGen GUI */
+		asm("	nop");
+	}
 
     if(error != 0)
     {
-      /* Test Failed */
-      asm("	nop");
+    	uint8_t buffer [50];
+    	int n;
+    	n=sprintf ((char*)buffer, "MPU check failed: 0x%X\r\n", error);
+    	sciDisplayText(UART, buffer, n);
+    	/* Test Failed */
+    	wait_forever();
     }
     else
     {
-      /* Test Passed */
-      asm("	nop");
+    	uint8_t buffer [50];
+    	int n;
+    	n=sprintf ((char*)buffer, "MPU check passed.\r\n");
+    	sciDisplayText(UART, buffer, n);
+    	wait_forever();
     }
 
 /* USER CODE END */
@@ -138,10 +125,13 @@ void sciDisplayText(sciBASE_t *sci, uint8 *text,uint32 length)
     };
 }
 
-
 void wait(uint32 time)
 {
     time--;
+}
+
+void inline wait_forever() {
+	while (1) ;
 }
 
 /* USER CODE END */
