@@ -10,6 +10,19 @@
 /* (c) Texas Instruments 2009-2014, All rights reserved. */
 
 /* USER CODE BEGIN (0) */
+/**
+ * HAL Code Generator configuration for MPU:
+ * 	on tab R4-MPU-PMU:
+ * 		- Select Enable MPU Region
+ * 		- Uncheck all Disable Sub-Region
+ * 		- Base:  0x80000000
+ * 		- Size (for HDK) 8_MB
+ * 		- End Address: 0x807FFFFF
+ * 		- Type: STRONGLYORDERED_OINC_NONSHARED
+ * 		- Permission: PRIV_RW_USER_RW_EXEC
+ */
+
+
 /* USER CODE END */
 
 /* Include Files */
@@ -34,6 +47,8 @@
 /* USER CODE BEGIN (2) */
 void sciDisplayText(sciBASE_t *sci, uint8 *text, uint32 length);
 void inline wait_forever();
+int32_t sci_printf(const char* format, ...);
+int32_t sci_vprintf(const char* format, va_list argList);
 
 #define MPU_ERR_NUMBER_OF_REGIONS 0x00000001
 #define MPU_ERR_REGION_SELECTION 0x00000002
@@ -41,6 +56,7 @@ void inline wait_forever();
 #define MPU_ERR_REGION_TYPE 0x00000008
 #define MPU_ERR_REGION_PERMISSION 0x00000010
 #define SDRAM_BASE_ADDRESS 0x80000000
+#define MAX_BUFFER_LEN 512
 
 #define UART scilinREG
 /* USER CODE END */
@@ -51,6 +67,8 @@ void main(void)
 	uint32 No_Of_MPU_Region = 0;
 	uint32 error = 0;
 	sciInit();
+	sci_printf("TI Hercules Development Kit is running.\r\n", error);
+	sci_printf("MPU test is running...\r\n", error);
 
 	/* Initialize memory protection unit.
 	* Region configurations are selected using MPU Tab in HALCoGen.
@@ -95,19 +113,13 @@ void main(void)
 
     if(error != 0)
     {
-    	uint8_t buffer [50];
-    	int n;
-    	n=sprintf ((char*)buffer, "MPU check failed: 0x%X\r\n", error);
-    	sciDisplayText(UART, buffer, n);
+    	sci_printf("MPU check failed: 0x%X\r\n", error);
     	/* Test Failed */
     	wait_forever();
     }
     else
     {
-    	uint8_t buffer [50];
-    	int n;
-    	n=sprintf ((char*)buffer, "MPU check passed.\r\n");
-    	sciDisplayText(UART, buffer, n);
+    	sci_printf("MPU check passed.\r\n");
     	wait_forever();
     }
 
@@ -125,9 +137,37 @@ void sciDisplayText(sciBASE_t *sci, uint8 *text,uint32 length)
     };
 }
 
-void wait(uint32 time)
+int32_t sci_printf(const char* format, ...)
 {
-    time--;
+	int length = -1;
+    va_list argList;
+    va_start(argList, format);
+    length = sci_vprintf(format, argList);
+    va_end(argList);
+
+    return length;
+}
+
+int32_t sci_vprintf(const char* format, va_list argList)
+{
+    char str[MAX_BUFFER_LEN];
+    int length = -1;
+
+    length = vsnprintf(str, sizeof(str), format, argList);
+
+    if(length > 0) {
+        // According to the C stdlib about vsnprintf:
+        // If the resulting string would be longer than n-1 characters, the
+        // remaining characters are discarded and not stored, but counted
+        // for the value returned by the function.
+        // In consequence we need to trim the value if larger than buffer.
+        if(length > sizeof(str)) {
+            length = sizeof(str);
+        }
+        sciDisplayText(UART, (uint8_t*)str, length);
+    }
+
+    return length;
 }
 
 void inline wait_forever() {
