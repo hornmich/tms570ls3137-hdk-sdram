@@ -30,7 +30,9 @@ uint8  TEXT3[TSIZE3]= {'T','E','X','A','S',' ','I','N','S','T','R','U','M','E','
 void sciDisplayText(sciBASE_t *sci, uint8 *text, uint32 length);
 void wait(uint32 time);
 
-#define UART scilinREG
+#define UART1 sciREG // SCI1, connected to the external uart-rs203 usb converter
+#define UART2 scilinREG // SCI2 connected to the FTDI
+#define UART UART1
 /* USER CODE END */
 
 /** @fn void main(void)
