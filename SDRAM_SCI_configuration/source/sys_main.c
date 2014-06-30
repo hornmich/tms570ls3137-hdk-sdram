@@ -47,6 +47,7 @@ int run_mentest();
 void main(void)
 {
 /* USER CODE BEGIN (3) */
+	_mpuInit_();
 	emif_SDRAMInit();
 	sciInit();
 	sci_printf("\r\n----\r\n");
