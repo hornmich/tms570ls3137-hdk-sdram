@@ -20,6 +20,7 @@
 #include "emif.h"
 #include "sci.h"
 #include "stdio.h"
+#include "string.h"
 
 #define UART sciREG
 #define SDRAM_BASE_ADDRESS 0x80000000
@@ -76,7 +77,7 @@ void sciDisplayText(sciBASE_t *sci, uint8 *text,uint32 length)
     while(length--)
     {
         while ((UART->FLR & 0x4) == 4); /* wait until busy */
-        sciSendByte(UART,*text++);      /* send out text   */
+        sciSendByte(sci,*text++);      /* send out text   */
     };
 }
 
@@ -93,24 +94,28 @@ int32_t sci_printf(const char* format, ...)
 
 int32_t sci_vprintf(const char* format, va_list argList)
 {
-    char str[MAX_BUFFER_LEN];
-    int length = -1;
+    char str1[MAX_BUFFER_LEN];
+    char str2[MAX_BUFFER_LEN];
+    int length1 = -1;
 
-    length = vsnprintf(str, sizeof(str), format, argList);
+    length1 = vsnprintf(str1, sizeof(str1), format, argList);
+    strcpy(str2, str1);
+    int length2 = length1;
 
-    if(length > 0) {
+    if(length1 > 0) {
         // According to the C stdlib about vsnprintf:
         // If the resulting string would be longer than n-1 characters, the
         // remaining characters are discarded and not stored, but counted
         // for the value returned by the function.
         // In consequence we need to trim the value if larger than buffer.
-        if(length > sizeof(str)) {
-            length = sizeof(str);
+        if(length1 > sizeof(str1)) {
+            length1 = sizeof(str1);
+            length2 = length1;
         }
-        sciDisplayText(UART, (uint8_t*)str, length);
+        sciDisplayText(UART, (uint8_t*)str1, length1);
+        sciDisplayText(scilinREG, (uint8_t*)str2, length2);
     }
-
-    return length;
+    return length1;
 }
 
 void inline wait_forever() {
