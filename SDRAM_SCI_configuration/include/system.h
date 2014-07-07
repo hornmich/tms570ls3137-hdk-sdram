@@ -82,7 +82,7 @@ enum systemClockSource
 *
 *   PLL 1 clock source exported from HALCoGen GUI
 */
-#define PLL1_FREQ    180.00F
+#define PLL1_FREQ    160.00F
 
 /** @def LPO_LF_FREQ
 *   @brief LPO Low Freq Oscillator source exported from HALCoGen GUI
@@ -103,42 +103,42 @@ enum systemClockSource
 *
 *   PLL 2 clock source exported from HALCoGen GUI
 */
-#define PLL2_FREQ    180.00F
+#define PLL2_FREQ    160.00F
 
 /** @def GCLK_FREQ
 *   @brief GCLK domain frequency exported from HALCoGen GUI
 *
 *   GCLK domain frequency exported from HALCoGen GUI
 */
-#define GCLK_FREQ    180.000F
+#define GCLK_FREQ    160.000F
 
 /** @def HCLK_FREQ
 *   @brief HCLK domain frequency exported from HALCoGen GUI
 *
 *   HCLK domain frequency exported from HALCoGen GUI
 */
-#define HCLK_FREQ    180.000F
+#define HCLK_FREQ    160.000F
 
 /** @def RTI_FREQ
 *   @brief RTI Clock frequency exported from HALCoGen GUI
 *
 *   RTI Clock frequency exported from HALCoGen GUI
 */
-#define RTI_FREQ     90.000F
+#define RTI_FREQ     80.000F
 
 /** @def AVCLK1_FREQ
 *   @brief AVCLK1 Domain frequency exported from HALCoGen GUI
 *
 *   AVCLK Domain frequency exported from HALCoGen GUI
 */
-#define AVCLK1_FREQ  90.000F
+#define AVCLK1_FREQ  80.000F
 
 /** @def AVCLK2_FREQ
 *   @brief AVCLK2 Domain frequency exported from HALCoGen GUI
 *
 *   AVCLK2 Domain frequency exported from HALCoGen GUI
 */
-#define AVCLK2_FREQ  90.000F
+#define AVCLK2_FREQ  80.000F
 
 /** @def AVCLK3_FREQ
 *   @brief AVCLK3 Domain frequency exported from HALCoGen GUI
@@ -152,28 +152,28 @@ enum systemClockSource
 *
 *   AVCLK4 Domain frequency exported from HALCoGen GUI
 */
-#define AVCLK4_FREQ  90.000F
+#define AVCLK4_FREQ  80.000F
 
 /** @def VCLK1_FREQ
 *   @brief VCLK1 Domain frequency exported from HALCoGen GUI
 *
 *   VCLK1 Domain frequency exported from HALCoGen GUI
 */
-#define VCLK1_FREQ   90.000F
+#define VCLK1_FREQ   80.000F
 
 /** @def VCLK2_FREQ
 *   @brief VCLK2 Domain frequency exported from HALCoGen GUI
 *
 *   VCLK2 Domain frequency exported from HALCoGen GUI
 */
-#define VCLK2_FREQ   90.000F
+#define VCLK2_FREQ   80.000F
 
 /** @def VCLK3_FREQ
 *   @brief VCLK3 Domain frequency exported from HALCoGen GUI
 *
 *   VCLK3 Domain frequency exported from HALCoGen GUI
 */
-#define VCLK3_FREQ   90.000F
+#define VCLK3_FREQ   80.000F
 
 /** @def VCLK4_FREQ
 *   @brief VCLK4 Domain frequency exported from HALCoGen GUI
@@ -304,7 +304,7 @@ typedef struct system_config_reg
                                     | (uint32)((uint32)0x1FU << 24U) \
                                     | (uint32)0x00000000U \
                                     | (uint32)((uint32)(6U - 1U)<< 16U)\
-                                    | (uint32)((uint32)(135U - 1U)<< 8U) )
+                                    | (uint32)((uint32)(120U - 1U)<< 8U) )
                                     
 #define SYS_PLLCTL1_CONFIGVALUE_2   (((SYS_PLLCTL1_CONFIGVALUE_1) & 0xE0FFFFFFU) | (uint32)((uint32)(1U - 1U) << 24U))
                                     
@@ -347,7 +347,7 @@ typedef struct system_config_reg
 #define SYS2_PLLCTL3_CONFIGVALUE_1  ( (uint32)((uint32)(2U - 1U) << 29U)\
                                     | (uint32)((uint32)0x1FU << 24U) \
                                     | (uint32)((uint32)(6U - 1U)<< 16U) \
-                                    | (uint32)((uint32)(135U - 1U) << 8U) )
+                                    | (uint32)((uint32)(120U - 1U) << 8U) )
                                     
 #define SYS2_PLLCTL3_CONFIGVALUE_2  (((SYS2_PLLCTL3_CONFIGVALUE_1) & 0xE0FFFFFFU) | (uint32)((uint32)(1U - 1U) << 24U))
 #define SYS2_STCCLKDIV_CONFIGVALUE  0U
