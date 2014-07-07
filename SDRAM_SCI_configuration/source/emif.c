@@ -35,7 +35,7 @@ void emif_SDRAMInit(void)
                       (uint32)((uint32)0U << 23U)|
                       (uint32)((uint32)1U << 20U)|
                       (uint32)((uint32)0U << 19U)|
-                      (uint32)((uint32)0U << 16U)|
+                      (uint32)((uint32)1U << 16U)|
                       (uint32)((uint32)3U << 12U)|
                       (uint32)((uint32)5U << 8U)|
                       (uint32)((uint32)0U << 7U)|
@@ -43,8 +43,8 @@ void emif_SDRAMInit(void)
                       (uint32)((uint32)0U << 3U);
 
  /* configure refresh rate*/
-   emifREG->SDSRETR = (uint32)6U;  
-   emifREG->SDRCR   = 2250U;	
+   emifREG->SDSRETR = (uint32)5U;  
+   emifREG->SDRCR   = 2000U;	
 
 /**  -general clearing of register
 *    -for NM for setting 16 bit data bus
@@ -55,7 +55,7 @@ void emif_SDRAMInit(void)
 */   
     emifREG->SDCR   = (uint32)((uint32)0U << 31U)|                               	
                       (uint32)((uint32)1U << 14U)|                               	
-                      (uint32)((uint32)3U << 9U)|  	
+                      (uint32)((uint32)2U << 9U)|  	
                       (uint32)((uint32)1U << 8U)|                                	
                       (uint32)((uint32)2U << 4U)|              	
                       (uint32)((uint32)elements_256);         	
@@ -65,6 +65,7 @@ void emif_SDRAMInit(void)
    emifREG->SDRCR   = 31U;	
 
 /* USER CODE BEGIN (3) */
+   emifREG->SDRCR   = 312U;	
 /* USER CODE END */
 }
 
