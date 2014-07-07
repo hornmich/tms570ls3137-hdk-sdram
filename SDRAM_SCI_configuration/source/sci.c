@@ -58,7 +58,7 @@ void sciInit(void)
                   | (uint32)((uint32)1U << 5U)   /* internal clock (device has no clock pin) */
                   | (uint32)((uint32)(1U-1U) << 4U)  /* number of stop bits */
                   | (uint32)((uint32)0U << 3U)  /* even parity, otherwise odd */
-                  | (uint32)((uint32)1U << 2U)  /* enable parity */
+                  | (uint32)((uint32)0U << 2U)  /* enable parity */
                   | (uint32)((uint32)1U << 1U);  /* asynchronous timing mode */
 
     /** - set baudrate */
@@ -134,7 +134,7 @@ void sciInit(void)
                     | (uint32)((uint32)1U << 5U)   /* internal clock (device has no clock pin) */
                     | (uint32)((uint32)(1U-1U) << 4U)  /* number of stop bits */
                     | (uint32)((uint32)0U << 3U)  /* even parity, otherwise odd */
-                    | (uint32)((uint32)1U << 2U)  /* enable parity */
+                    | (uint32)((uint32)0U << 2U)  /* enable parity */
                     | (uint32)((uint32)1U << 1U);  /* asynchronous timing mode */
                     
     /** - set baudrate */
