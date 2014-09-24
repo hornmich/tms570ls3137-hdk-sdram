@@ -31,13 +31,13 @@ void emif_SDRAMInit(void)
    uint32 buffer;
 
    emifREG->SDTIMR  = (uint32)((uint32)4U << 27U)|
-                      (uint32)((uint32)1U << 24U)|
+                      (uint32)((uint32)2U << 24U)|
                       (uint32)((uint32)0U << 23U)|
-                      (uint32)((uint32)1U << 20U)|
+                      (uint32)((uint32)2U << 20U)|
                       (uint32)((uint32)0U << 19U)|
                       (uint32)((uint32)1U << 16U)|
-                      (uint32)((uint32)2U << 12U)|
-                      (uint32)((uint32)4U << 8U)|
+                      (uint32)((uint32)5U << 12U)|
+                      (uint32)((uint32)8U << 8U)|
                       (uint32)((uint32)0U << 7U)|
                       (uint32)((uint32)1U << 4U)|
                       (uint32)((uint32)0U << 3U);
@@ -65,6 +65,7 @@ void emif_SDRAMInit(void)
    emifREG->SDRCR   = 31U;	
 
 /* USER CODE BEGIN (3) */
+   emifREG->SDRCR   = 312U;
 /* USER CODE END */
 }
 
