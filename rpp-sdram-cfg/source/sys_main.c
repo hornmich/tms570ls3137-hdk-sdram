@@ -68,15 +68,6 @@ void main(void)
 	run_mentest();
 	sci_printf("Endless loop...\r\n");
 
-	volatile uint32_t* addrPtr = (uint32_t*)SDRAM_BASE_ADDRESS;
-	*addrPtr = 0x12345678;
-
-	sci_printf("RAM value: %x %x\r\n", *addrPtr, *addrPtr);
-	sci_printf("RAM value: %x\r\n", *addrPtr);
-	sci_printf("RAM value: %x\r\n", *addrPtr);
-	sci_printf("RAM value: %x\r\n", *addrPtr);
-
-
 	while(1) {
 		//sci_printf("CAN msg transmitted.\r\n");
 		//canTransmit(canREG1, canMESSAGE_BOX1, tx_data);
