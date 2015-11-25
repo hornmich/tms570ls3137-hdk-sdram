@@ -1,16 +1,4 @@
 /**********************************************************************************************************************
- *  COPYRIGHT
- *  -------------------------------------------------------------------------------------------------------------------
- *  \verbatim
- *                 TEXAS INSTRUMENTS INCORPORATED PROPRIETARY INFORMATION
- *
- *                 Property of Texas Instruments, Unauthorized reproduction and/or distribution
- *                 is strictly prohibited.  This product  is  protected  under  copyright  law
- *                 and  trade  secret law as an  unpublished work.
- *                 (C) Copyright Texas Instruments - 2012.  All rights reserved.
- *
- *  \endverbatim
- *  -------------------------------------------------------------------------------------------------------------------
  *  FILE DESCRIPTION
  *  -------------------------------------------------------------------------------------------------------------------
  *         File:  ti_fee.h
@@ -46,9 +34,59 @@
  *                                                                   MISRA C fixes.	Version info corrected. 
  * 01.13.00       30Dec2013	   Vishwanath Reddy     0000000000000	 Undated version info for  SDOCM00107976
  *                                                                   and SDOCM00105795.     
- *
+ * 01.13.01       19May2014	   Vishwanath Reddy     0000000000000	 Updated version info for  SDOCM00107913
+ *                                                                   and SDOCM00107622.     
+ * 01.13.02       12Jun2014	   Vishwanath Reddy     0000000000000	 Updated version info for SDOCM00108238
+ * 01.14.00		  26Mar2014    Vishwanath Reddy 	                 Update version info for SDOCM00107161. 
+ * 01.15.00		  06Jun2014    Vishwanath Reddy 	                 Support for Conqueror.
+ * 01.16.00		  15Jul2014    Vishwanath Reddy 	SDOCM00112141    Remove  MISRA warnings.
+ * 01.16.01		  12Sep2014	   Vishwanath Reddy     SDOCM00112930    Prototype for TI_Fee_SuspendResumeErase added.
+ *                                                                   TI_Fee_EraseCommandType enum added.    
+ *                                                                   extern added for TI_Fee_bEraseSuspended.     
+ * 01.17.00		  15Oct2014    Vishwanath Reddy     SDOCM00113379    RAM Optimization changes.
+ * 01.17.01		  30Oct2014    Vishwanath Reddy     SDOCM00113536    Support for TMS570LS07xx,TMS570LS09xx,
+ *                                                                   TMS570LS05xx, RM44Lx. 
+ * 01.17.02		  26Dec2014    Vishwanath Reddy     SDOCM00114102    FLEE Errata Fix.
+ *                                                  SDOCM00114104    Change ALL 1's OK check condition.
+ *                                                                   Updated version info. Added new macros.
+ *                                                  SDOCM00114423	 Add new enum TI_Fee_DeviceType.
+ *                                                                   Add new variable TI_Fee_MaxSectors and 
+ *                                                                   prototype TI_FeeInternal_PopulateStructures. 
  *********************************************************************************************************************/
 
+/*
+* Copyright (C) 2009-2015 Texas Instruments Incorporated - www.ti.com  
+* 
+* 
+*  Redistribution and use in source and binary forms, with or without 
+*  modification, are permitted provided that the following conditions 
+*  are met:
+*
+*    Redistributions of source code must retain the above copyright 
+*    notice, this list of conditions and the following disclaimer.
+*
+*    Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the 
+*    documentation and/or other materials provided with the   
+*    distribution.
+*
+*    Neither the name of Texas Instruments Incorporated nor the names of
+*    its contributors may be used to endorse or promote products derived
+*    from this software without specific prior written permission.
+*
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+*  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
 
 #ifndef TI_FEE_H
 #define TI_FEE_H
