@@ -40,9 +40,15 @@
 #ifndef _HW_MDIO_H_
 #define _HW_MDIO_H_
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 #define MDIO_BASE               (0xFCF78900U)
 
@@ -248,6 +254,8 @@ extern "C" {
 #define MDIO_USERPHYSEL1_PHYADRMON (0x0000001FU)
 #define MDIO_USERPHYSEL1_PHYADRMON_SHIFT (0x00000000U)
 
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #ifdef __cplusplus
 }

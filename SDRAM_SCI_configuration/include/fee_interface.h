@@ -139,10 +139,10 @@
 #define TI_FEE_POLLING_MODE						FEE_POLLING_MODE
 /*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_CHECK_BANK7_ACCESS is a symbolic constant."*/
 #ifndef FEE_CHECK_BANK7_ACCESS
-#define TI_FEE_CHECK_BANK7_ACCESS						STD_OFF
+#define TI_FEE_CHECK_BANK7_ACCESS				STD_OFF
 #else
 /*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_CHECK_BANK7_ACCESS is a symbolic constant."*/
-#define TI_FEE_CHECK_BANK7_ACCESS						FEE_CHECK_BANK7_ACCESS
+#define TI_FEE_CHECK_BANK7_ACCESS				FEE_CHECK_BANK7_ACCESS
 #endif
 
 /*----------------------------------------------------------------------------*/
@@ -161,8 +161,6 @@
 /* Block Configuration                                                        */
 /*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_NUMBER_OF_BLOCKS is a symbolic constant."*/
 #define TI_FEE_NUMBER_OF_BLOCKS  				FEE_NUMBER_OF_BLOCKS
-
-
 #endif	/* TI_FEE_DRIVER */
 
 #endif /* FEE_INTERFACE_H */

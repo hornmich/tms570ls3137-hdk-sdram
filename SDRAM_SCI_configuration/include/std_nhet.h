@@ -41,9 +41,15 @@
 #ifndef __STD_NHET_H__
 #define __STD_NHET_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "sys_common.h"
 
 #if defined(_TMS470_BIG) || defined(__big_endian__)
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 #ifndef HET_v2
 #   define HET_v2 0
@@ -2454,6 +2460,9 @@ typedef union
 } SHFT_INSTRUCTION;
 
 #endif
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #endif
 /*--------------------------- End Of File ----------------------------------*/

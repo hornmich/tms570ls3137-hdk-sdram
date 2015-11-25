@@ -330,7 +330,7 @@ void dmaDefineRegion(dmaREGION_t region, uint32 start_add, uint32 end_add)
 *   This function enables the selected region with selected access permission with or without interrupt enable
 */
 /* SourceId : DMA_SourceId_011 */
-/* DesignId : DMA_DesignId_010 */
+/* DesignId : DMA_DesignId_011 */
 /* Requirements: HL_SR177 */
 void dmaEnableRegion(dmaREGION_t region, dmaRegionAccess_t access, boolean intenable)
 {

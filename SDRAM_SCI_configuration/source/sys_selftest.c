@@ -755,7 +755,7 @@ boolean checkefcSelfTest(void)
 */
 /* SourceId : SELFTEST_SourceId_015 */
 /* DesignId : SELFTEST_DesignId_016 */
-/* Requirements : HL_SR405 */
+/* Requirements : HL_SR404, HL_SR405 */
 void fmcBus2Check(void)
 {
 /* USER CODE BEGIN (32) */
@@ -790,7 +790,7 @@ void fmcBus2Check(void)
 */
 /* SourceId : SELFTEST_SourceId_016 */
 /* DesignId : SELFTEST_DesignId_017 */
-/* Requirements : HL_SR405 */
+/* Requirements : HL_SR404, HL_SR405 */
 void fmcECCcheck(void)
 {
     volatile uint32 otpread;
@@ -886,6 +886,8 @@ void checkB0RAMECC(void)
 	/* Check for error status */
 	tcram1ErrStat = tcram1REG->RAMERRSTATUS & 0x1U;
 	tcram2ErrStat = tcram2REG->RAMERRSTATUS & 0x1U;
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
     if((tcram1ErrStat == 0U) && (tcram2ErrStat == 0U))
     {
         /* TCRAM module does not reflect 1-bit error reported by CPU */
@@ -982,6 +984,8 @@ void checkB1RAMECC(void)
 	/* Check for error status */
 	tcram1ErrStat = tcram1REG->RAMERRSTATUS & 0x1U;
 	tcram2ErrStat = tcram2REG->RAMERRSTATUS & 0x1U;
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
     if((tcram1ErrStat == 0U) && (tcram2ErrStat == 0U))
     {
         /* TCRAM module does not reflect 1-bit error reported by CPU */
@@ -1617,7 +1621,6 @@ void adc2ParityCheck(void)
 /* USER CODE END */
 }
 
-
 /** @fn void can1ParityCheck(void)
 *   @brief Routine to check CAN1 RAM parity error detection and signaling mechanism
 *
@@ -1874,7 +1877,6 @@ void mibspi1ParityCheck(void)
 /* USER CODE END */
 }
 
-
 /** @fn void mibspi3ParityCheck(void)
 *   @brief Routine to check MIBSPI3 RAM parity error detection and signaling mechanism
 *
@@ -1938,7 +1940,6 @@ void mibspi3ParityCheck(void)
 /* USER CODE BEGIN (74) */
 /* USER CODE END */
 }
-
 
 /** @fn void mibspi5ParityCheck(void)
 *   @brief Routine to check MIBSPI5 RAM parity error detection and signaling mechanism
@@ -2052,6 +2053,8 @@ void checkRAMECC(void)
 	/* Check for error status */
 	tcram1ErrStat = tcram1REG->RAMERRSTATUS & 0x1U;
 	tcram2ErrStat = tcram2REG->RAMERRSTATUS & 0x1U;
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
     if((tcram1ErrStat == 0U) || (tcram2ErrStat == 0U))
     {
         /* TCRAM module does not reflect 1-bit error reported by CPU */
@@ -2334,7 +2337,6 @@ void checkPLL1Slip(void)
     }
 }
 
-
 /** @fn void checkPLL2Slip(void)
 *   @brief Check PLL2 Slip detection logic.
 *
@@ -2423,6 +2425,8 @@ void checkRAMAddrParity(void)
 	/* Check for error status */
 	tcram1ErrStat = tcram1REG->RAMERRSTATUS & 0x100U;
 	tcram2ErrStat = tcram2REG->RAMERRSTATUS & 0x100U;
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
+	/*SAFETYMCUSW 139 S MR:13.7  <APPROVED> "LDRA Tool issue" */
     if((tcram1ErrStat == 0U) || (tcram2ErrStat == 0U))
     {
         /* No Address parity error detected */

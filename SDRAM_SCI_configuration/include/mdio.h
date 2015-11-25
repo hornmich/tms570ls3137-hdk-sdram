@@ -44,12 +44,18 @@
 #ifndef __MDIO_H__
 #define __MDIO_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "sys_common.h"
 #include "hw_mdio.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /* MDIO input and output frequencies in Hz */
 #define MDIO_FREQ_INPUT           32000000U
@@ -73,6 +79,9 @@ extern void MDIOPhyRegWrite(uint32 baseAddr, uint32 phyAddr,
                             uint32 regNum, uint16 RegVal);
 extern void MDIOEnable(uint32 baseAddr);
 extern void MDIODisable(uint32 baseAddr);
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #ifdef __cplusplus
 }

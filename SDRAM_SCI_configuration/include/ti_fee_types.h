@@ -62,7 +62,7 @@
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-#include "Device_Header.h" 
+#include "Device_header.h"
 
 #ifndef TI_Fee_None
 #define TI_Fee_None 0x00U	/*Take no action on single bit errors, (respond with corrected data), */
@@ -79,7 +79,7 @@
 /*SAFETYMCUSW 74 S MR:18.4 <APPROVED> "Reason - union declaration is necessary here."*/
 typedef	union 
 {	
-	uint16 Fee_u16StatusWord;
+	uint16 Fee_u16StatusWord;	
 	struct
 	{		
 		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
@@ -125,6 +125,7 @@ typedef enum
 {
    UNINIT,
    IDLE,
+   /*SAFETYMCUSW 91 S MR:5.2,5.6,5.7 <APPROVED> "Reason - BUSY in F021 is a member of structure."*/
    BUSY,
    BUSY_INTERNAL
 }TI_FeeModuleStatusType;

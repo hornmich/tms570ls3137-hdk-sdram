@@ -80,7 +80,8 @@ extern "C" {
 										| (uint32)((uint32)0x5U << 0U)  )
 #define PMM_MEMPDPWRCTRL0_CONFIGVALUE 	( (uint32)((uint32)0x5U << 24U) \
 										| (uint32)((uint32)0x5U << 16U) \
-										| (uint32)((uint32)0x5U << 8U)  )
+										| (uint32)((uint32)0x5U << 8U)  \
+										)
 
 #define PMM_PDCLKDISREG_CONFIGVALUE		( (uint32)((uint32)(1U-1U) << 0U) \
 										| (uint32)((uint32)(1U-1U) << 1U) \

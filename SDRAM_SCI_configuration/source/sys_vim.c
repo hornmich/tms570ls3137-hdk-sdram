@@ -521,7 +521,7 @@ void vimEnableInterrupt(uint32 channel, systemInterrupt_t inttype)
         }
         else
         {
-            vimREG->FIRQPR2 |= (uint32)1U << (channel-64U);
+            vimREG->FIRQPR2 |= ((uint32)1U << (channel-64U));
         }
         vimREG->REQMASKSET2 = (uint32)1U << (channel-64U);
     }
@@ -533,7 +533,7 @@ void vimEnableInterrupt(uint32 channel, systemInterrupt_t inttype)
         }
         else
         {
-            vimREG->FIRQPR1 |= (uint32)1U << (channel-32U);
+            vimREG->FIRQPR1 |= ((uint32)1U << (channel-32U));
         }
         vimREG->REQMASKSET1 = (uint32)1U << (channel-32U);
     }
@@ -545,7 +545,7 @@ void vimEnableInterrupt(uint32 channel, systemInterrupt_t inttype)
         }
         else
         {
-            vimREG->FIRQPR0 |= (uint32)1U << channel;
+            vimREG->FIRQPR0 |= ((uint32)1U << channel);
         }
         vimREG->REQMASKSET0 = (uint32)1U << channel;
     }

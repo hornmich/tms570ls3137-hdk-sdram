@@ -48,7 +48,13 @@
 #ifndef __REG_FLASH_H__
 #define __REG_FLASH_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "sys_common.h"
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /* Flash Register Frame Definition */
 /** @struct flashWBase
@@ -121,5 +127,8 @@ typedef volatile struct flashWBase
 *   This pointer is used by the system driver to access the flash wrapper registers.
 */
 #define flashWREG ((flashWBASE_t *)(0xFFF87000U))
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #endif

@@ -363,7 +363,8 @@ void sciSendByte(sciBASE_t *sci, uint8 byte)
 void sciSend(sciBASE_t *sci, uint32 length, uint8 * data)
 {
     uint32 index = (sci == sciREG) ? 0U : 1U;
-
+    uint8 txdata;
+	
 /* USER CODE BEGIN (11) */
 /* USER CODE END */
 /*SAFETYMCUSW 139 S MR:13.7 <APPROVED> "Mode variable is configured in sciEnableNotification()" */
@@ -377,7 +378,7 @@ void sciSend(sciBASE_t *sci, uint32 length, uint8 * data)
 
         /* start transmit by sending first byte */        
         /*SAFETYMCUSW 45 D MR:21.1 <APPROVED> "Valid non NULL input parameters are only allowed in this driver" */
-		uint8 txdata = *g_sciTransfer_t[index].tx_data;
+		txdata = *g_sciTransfer_t[index].tx_data;
 		sci->TD     = (uint32)(txdata);
 		/*SAFETYMCUSW 45 D MR:21.1 <APPROVED> "Valid non NULL input parameters are only allowed in this driver" */
         /*SAFETYMCUSW 567 S MR:17.1,17.4 <APPROVED> "Pointer increment needed" */
@@ -394,7 +395,7 @@ void sciSend(sciBASE_t *sci, uint32 length, uint8 * data)
             { 
             } /* Wait */
 			/*SAFETYMCUSW 45 D MR:21.1 <APPROVED> "Valid non NULL input parameters are only allowed in this driver" */
-			uint8 txdata = *data;
+			txdata = *data;
             sci->TD = (uint32)(txdata);
 			/*SAFETYMCUSW 45 D MR:21.1 <APPROVED> "Valid non NULL input parameters are only allowed in this driver" */
             /*SAFETYMCUSW 567 S MR:17.1,17.4 <APPROVED> "Pointer increment needed" */
@@ -434,8 +435,8 @@ uint32 sciIsRxReady(sciBASE_t *sci)
 *
 *   @return The Idle flag
 *
-*   Checks to see if the SCI Idle flag is set, returns 0 is flags 
-*   not set otherwise will return the Ilde flag itself.
+*   Checks to see if the SCI Idle flag is set, returns 0 if idle
+*	period has been detected and SCI is ready to receive, otherwise returns the Idle flag itself.
 */
 /* SourceId : SCI_SourceId_008 */
 /* DesignId : SCI_DesignId_008 */

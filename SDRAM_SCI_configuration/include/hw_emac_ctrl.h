@@ -40,9 +40,15 @@
 #ifndef _HW_EMAC_CTRL_H_
 #define _HW_EMAC_CTRL_H_
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 #define EMAC_CTRL_REVID              (0x0U)
 #define EMAC_CTRL_SOFTRESET          (0x4U)
@@ -79,5 +85,7 @@ extern "C" {
 }
 #endif
 
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #endif

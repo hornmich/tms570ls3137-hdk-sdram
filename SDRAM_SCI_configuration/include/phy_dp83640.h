@@ -40,9 +40,15 @@
 #ifndef _PHY_DP83640_H_
 #define _PHY_DP83640_H_
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /** @enum PHY_timestamp
 *   @brief Alias names for transmit and receive timestamps
@@ -114,6 +120,9 @@ extern boolean Dp83640LinkStatusGet(uint32 mdioBaseAddr, uint32 phyAddr,volatile
 extern uint64 Dp83640GetTimeStamp(uint32 mdioBaseAddr, uint32 phyAddr, phyTimeStamp_t type);
 extern void Dp83640EnableLoopback(uint32 mdioBaseAddr, uint32 phyAddr);
 extern void Dp83640DisableLoopback(uint32 mdioBaseAddr, uint32 phyAddr);
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #ifdef __cplusplus
 }

@@ -43,8 +43,13 @@
 #ifndef __DMA_H__
 #define __DMA_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "reg_dma.h"
 
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /** @def BLOCK_TRANSFER
 *   @brief Alias name for DMA Block transfer
@@ -347,6 +352,9 @@ void dmaGetConfigValue(dma_config_reg_t *config_reg, config_value_type_t type);
 * interrupt flag register.
 */
 void dmaGroupANotification(dmaInterrupt_t inttype, uint32 channel);
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 /**@}*/
 #endif

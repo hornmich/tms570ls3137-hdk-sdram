@@ -103,11 +103,13 @@
 *   This enumeration is used to provide alias names for the pbist Port number
 *     - PBIST_PORT0
 *     - PBIST_PORT1
+*
+*   @Note Check the datasheet for the port avaiability
 */
 enum pbistPort
 {
     PBIST_PORT0 = 0U, /**< Alias for PBIST Port 0 */
-    PBIST_PORT1 = 1U  /**< Alias for PBIST Port 1 */
+    PBIST_PORT1 = 1U  /**< Alias for PBIST Port 1 < Check datasheet for Port 1 availability > */
 };
 /** @enum pbistAlgo
 *   @brief Alias names for pbist Algorithm

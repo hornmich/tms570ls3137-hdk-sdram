@@ -58,6 +58,9 @@
 extern "C" {
 #endif
 
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
+
 /*****************************************************************************/
 /*
 ** Macros which can be used as speed parameter to the API EMACRMIISpeedSet
@@ -390,6 +393,8 @@ void EMACTxIntStat(uint32 emacBase, uint32 channel, emac_tx_int_status_t *txints
 void EMACRxIntStat(uint32 emacBase, uint32 channel, emac_rx_int_status_t *rxintstat);
 void EMACGetConfigValue(emac_config_reg_t *config_reg, config_value_type_t type);
 
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #ifdef __cplusplus
 }

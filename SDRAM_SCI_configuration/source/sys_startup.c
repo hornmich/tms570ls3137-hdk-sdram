@@ -165,8 +165,7 @@ void _c_int00(void)
     
 /* USER CODE BEGIN (15) */
 /* USER CODE END */
-
-        /* continue with normal start-up sequence */
+      /* continue with normal start-up sequence */
     }
     /*SAFETYMCUSW 139 S MR:13.7 <APPROVED> "Hardware status bit read check" */
     else if ((SYS_EXCEPTION & OSC_FAILURE_RESET) != 0U)
@@ -264,12 +263,13 @@ void _c_int00(void)
 
 /* USER CODE BEGIN (26) */
 /* USER CODE END */
+
     /* Initialize System - Clock, Flash settings with Efuse self check */
     systemInit();
     
     /* Workaround for Errata PBIST#4 */
     errata_PBIST_4();
-
+	
     /* Run a diagnostic check on the memory self-test controller.
      * This function chooses a RAM test algorithm and runs it on an on-chip ROM.
      * The memory self-test is expected to fail. The function ensures that the PBIST controller
@@ -319,9 +319,9 @@ void _c_int00(void)
          
         pbistFail();
 
-    }   
-
-
+    } 
+	
+    /* Disable PBIST clocks and disable memory self-test mode */
 /* USER CODE BEGIN (29) */
 /* USER CODE END */
 
@@ -373,6 +373,7 @@ void _c_int00(void)
 
     /* Disable PBIST clocks and disable memory self-test mode */
     pbistStop();
+
     
 /* USER CODE BEGIN (37) */
 /* USER CODE END */
@@ -397,12 +398,10 @@ void _c_int00(void)
 /* USER CODE BEGIN (39) */
 /* USER CODE END */
 
-
     /* Start PBIST on all dual-port memories */
     /* NOTE : Please Refer DEVICE DATASHEET for the list of Supported Dual port Memories.
        PBIST test performed only on the user selected memories in HALCoGen's GUI SAFETY INIT tab.
      */
-    
     pbistRun(  (uint32)0x00000000U    /* EMAC RAM */
              | (uint32)0x00000000U    /* USB RAM */  
              | (uint32)0x00000800U    /* DMA RAM */
@@ -425,7 +424,6 @@ void _c_int00(void)
 /* USER CODE BEGIN (40) */
 /* USER CODE END */
 
-
     /* Test the CPU ECC mechanism for RAM accesses.
      * The checkBxRAMECC functions cause deliberate single-bit and double-bit errors in TCRAM accesses
      * by corrupting 1 or 2 bits in the ECC. Reading from the TCRAM location with a 2-bit error
@@ -437,8 +435,6 @@ void _c_int00(void)
 
 /* USER CODE BEGIN (41) */
 /* USER CODE END */
-
-
 /* USER CODE BEGIN (43) */
 /* USER CODE END */
 
@@ -478,8 +474,6 @@ void _c_int00(void)
     /* Disable PBIST clocks and disable memory self-test mode */
     pbistStop();
     
-
-
 /* USER CODE BEGIN (55) */
 /* USER CODE END */
 
@@ -646,7 +640,6 @@ void _c_int00(void)
     esmInit();
     /* initialize copy table */
     __TI_auto_init();
-
 /* USER CODE BEGIN (75) */
 /* USER CODE END */
     

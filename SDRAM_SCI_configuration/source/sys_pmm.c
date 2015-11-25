@@ -434,3 +434,6 @@ boolean pmmPerformSelfTest(void)
 
     return status;
 }
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */

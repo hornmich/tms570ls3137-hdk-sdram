@@ -44,11 +44,17 @@
 #ifndef __LIN_H__
 #define __LIN_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "reg_lin.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /** @def LIN_BREAK_INT
 *   @brief Alias for break detect interrupt flag
@@ -310,6 +316,9 @@ void     linGetConfigValue(lin_config_reg_t *config_reg, config_value_type_t typ
 * interrupt flag register.
 */
 void linNotification(linBASE_t *lin, uint32 flags);
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 /**@}*/
 #ifdef __cplusplus

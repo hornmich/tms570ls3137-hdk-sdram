@@ -40,9 +40,15 @@
 #ifndef _HW_REG_ACCESS_H_
 #define _HW_REG_ACCESS_H_
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /*******************************************************************************
 *
@@ -65,7 +71,9 @@ extern "C" {
         (HWREGB(((uint32)(x) & 0xF0000000U) | (uint32)0x02000000U |               \
                (((uint32)(x) & 0x000FFFFFU) << 5U) | (uint32)((uint32)(b) << 2U)))
 
-/**@}*/
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
+
 #ifdef __cplusplus
 }
 #endif

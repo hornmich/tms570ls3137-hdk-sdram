@@ -68,7 +68,7 @@ _mpuInit_
         mov   r0,  #0x0008
         orr   r0,  r0,    #0x1000
         mcr   p15, #0,    r0, c6, c1, #4
-        movw  r0,  #((1 << 15) + (1 << 14) + (1 << 13) + (1 << 12) + (1 << 11) + (1 << 10) + (1 <<  9) + (1 <<  8) + (0x1F << 1) + (0)) 
+        movw  r0,  #((1 << 15) + (1 << 14) + (1 << 13) + (1 << 12) + (1 << 11) + (1 << 10) + (1 <<  9) + (1 <<  8) + (0x1F << 1) + (0))
         mcr   p15, #0,    r0, c6, c1, #2
         ; Setup region 2
         mov   r0,  #1
@@ -80,11 +80,11 @@ _mpuInit_
         mcr   p15, #0,    r0, c6, c1, #4
         movw  r0,  #((0 << 15) + (0 << 14) + (0 << 13) + (0 << 12) + (0 << 11) + (0 << 10) + (0 <<  9) + (0 <<  8) + (0x15 << 1) + (0))
         mcr   p15, #0,    r0, c6, c1, #2
-        ; Setup region  
+        ; Setup region
         mov   r0,  #2
         mcr   p15, #0,    r0, c6, c2, #0
         ldr   r0,  r3Base
-        mcr   p15, #0,    r0, c6, c1, #0    
+        mcr   p15, #0,    r0, c6, c1, #0
         mov   r0,  #0x0008
         orr   r0,  r0,    #0x0300
         mcr   p15, #0,    r0, c6, c1, #4
@@ -195,18 +195,18 @@ _mpuInit_
         ldmfd sp!, {r0}
         bx    lr
 
-r1Base  .word 0x00000000  
-r2Base  .word 0x00000000  
-r3Base  .word 0x08000000  
-r4Base  .word 0x08400000  
-r5Base  .word 0x60000000  
-r6Base  .word 0x80000000  
-r7Base  .word 0xF0000000  
-r8Base  .word 0xFC000000  
-r9Base  .word 0xFE000000  
-r10Base  .word 0xFF000000  
-r11Base  .word 0x08001000  
-r12Base  .word 0x20000000  
+r1Base  .word 0x00000000
+r2Base  .word 0x00000000
+r3Base  .word 0x08000000
+r4Base  .word 0x08400000
+r5Base  .word 0x60000000
+r6Base  .word 0x80000000
+r7Base  .word 0xF0000000
+r8Base  .word 0xFC000000
+r9Base  .word 0xFE000000
+r10Base  .word 0xFF000000
+r11Base  .word 0x08001000
+r12Base  .word 0x20000000
 
     .endasmfunc
 
@@ -228,7 +228,7 @@ _mpuEnable_
         dsb
         mcr   p15, #0, r0, c1, c0, #0
         isb
-        ldmfd sp!, {r0}		
+        ldmfd sp!, {r0}
         bx    lr
 
     .endasmfunc
@@ -251,7 +251,7 @@ _mpuDisable_
         dsb
         mcr   p15, #0, r0, c1, c0, #0
         isb
-        ldmfd sp!, {r0}		
+        ldmfd sp!, {r0}
         bx    lr
 
     .endasmfunc
@@ -272,7 +272,7 @@ _mpuEnableBackgroundRegion_
         mrc   p15, #0, r0,      c1, c0, #0
         orr   r0,  r0, #0x20000
         mcr   p15, #0, r0,      c1, c0, #0
-        ldmfd sp!, {r0}		
+        ldmfd sp!, {r0}
         bx    lr
 
     .endasmfunc

@@ -1483,4 +1483,7 @@ extern "C" {
 }
 #endif
 
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
+
 #endif

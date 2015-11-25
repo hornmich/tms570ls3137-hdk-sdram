@@ -52,8 +52,6 @@
 #include "sys_common.h"
 #include "reg_gio.h"
 
-
-
 /* USER CODE BEGIN (0) */
 /* USER CODE END */
 
@@ -163,6 +161,15 @@ typedef volatile struct het1RamBase
 */
 #define hetPORT1 ((gioPORT_t *)0xFFF7B84CU)
 
+/** @def hetRAM1
+*   @brief NHET1 RAM Pointer
+*
+*   This pointer is used by the HET driver to access the NHET1 memory.
+*/
+#define hetRAM1 ((hetRAMBASE_t *)0xFF460000U)
+
+#define NHET1RAMPARLOC	(*(volatile uint32 *)0xFF462000U)
+#define NHET1RAMLOC		(*(volatile uint32 *)0xFF460000U)
 
 /** @def hetREG2
 *   @brief HET2 Register Frame Pointer
@@ -170,7 +177,6 @@ typedef volatile struct het1RamBase
 *   This pointer is used by the HET driver to access the het module registers.
 */
 #define hetREG2 ((hetBASE_t *)0xFFF7B900U)
-
 
 /** @def hetPORT2
 *   @brief HET2 GIO Port Register Pointer
@@ -180,12 +186,12 @@ typedef volatile struct het1RamBase
 */
 #define hetPORT2 ((gioPORT_t *)0xFFF7B94CU)
 
-#define hetRAM1 ((hetRAMBASE_t *)0xFF460000U)
-
+/** @def hetRAM2
+*   @brief NHET1 RAM Pointer
+*
+*   This pointer is used by the HET driver to access the NHET2 memory.
+*/
 #define hetRAM2 ((hetRAMBASE_t *)0xFF440000U)
-
-#define NHET1RAMPARLOC	(*(volatile uint32 *)0xFF462000U)
-#define NHET1RAMLOC		(*(volatile uint32 *)0xFF460000U)
 
 #define NHET2RAMPARLOC	(*(volatile uint32 *)0xFF442000U)
 #define NHET2RAMLOC		(*(volatile uint32 *)0xFF440000U)

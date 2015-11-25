@@ -48,7 +48,13 @@
 #ifndef __REG_TCRAM_H__
 #define __REG_TCRAM_H__
 
+/* USER CODE BEGIN (0) */
+/* USER CODE END */
+
 #include "sys_common.h"
+
+/* USER CODE BEGIN (1) */
+/* USER CODE END */
 
 /* Tcram Register Frame Definition */
 /** @struct tcramBase
@@ -81,5 +87,8 @@ typedef volatile struct tcramBase
 
 #define tcram1REG ((tcramBASE_t *)(0xFFFFF800U))
 #define tcram2REG ((tcramBASE_t *)(0xFFFFF900U))
+
+/* USER CODE BEGIN (2) */
+/* USER CODE END */
 
 #endif
