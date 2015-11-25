@@ -94,10 +94,10 @@
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-#include "Std_Types.h"
+#include "hal_stdtypes.h"
 #include "fee_interface.h"
-#include "TI_Fee_Types.h"
-#include "TI_Fee_Cfg.h"
+#include "ti_fee_types.h"
+#include "ti_fee_cfg.h"
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
@@ -106,8 +106,8 @@
 #define TI_FEE_MINOR_VERSION    0U
 #define TI_FEE_PATCH_VERSION    2U
 #define TI_FEE_SW_MAJOR_VERSION 1U
-#define TI_FEE_SW_MINOR_VERSION 13U
-#define TI_FEE_SW_PATCH_VERSION 0U
+#define TI_FEE_SW_MINOR_VERSION 17U
+#define TI_FEE_SW_PATCH_VERSION 2U
 
 #define TI_FEE_VIRTUAL_SECTOR_VERSION 1U
 
@@ -134,6 +134,14 @@
 #define InvalidBlockLo		 0xFFFF0000U
 #define CorruptBlockHi		 0x00000000U
 #define CorruptBlockLo		 0x00000000U
+
+#define FEE_BANK 0U
+
+/* Enable/Disable FEE sectors */
+#define FEE_DISABLE_SECTORS_31_00 0x00000000U
+#define FEE_DISABLE_SECTORS_63_32 0x00000000U
+#define FEE_ENABLE_SECTORS_31_00  0xFFFFFFFFU 
+#define FEE_ENABLE_SECTORS_63_32  0xFFFFFFFFU 
 
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
@@ -188,6 +196,19 @@ typedef enum
 	Error_CurrentAddress=18U,
 	Error_Exceed_No_Of_DataSets=19U
 }TI_Fee_ErrorCodeType;
+
+typedef enum
+{
+	Suspend_Erase=0U,
+	Resume_Erase
+}TI_Fee_EraseCommandType;
+
+/* Enum to describe the Device types */
+typedef enum
+{
+   CHAMPION = 0U,               /* Function returned no error */
+   ARCHER = 1U             /* Function returned an error */
+} TI_Fee_DeviceType;
 
 typedef uint32 TI_Fee_AddressType;                     /* Used for defining variables to indicate number of 
                                                           bytes for address offset */
@@ -256,8 +277,6 @@ typedef struct
 	TI_Fee_AddressType Fee_oVirtualSectorStartAddress; 		/* Start Address of the current Virtual Sector */
 	TI_Fee_AddressType Fee_oVirtualSectorEndAddress;    	/* End Address of the current Virtual Sector */ 
 	TI_Fee_AddressType Fee_oCopyVirtualSectorAddress;   	/* Start Address of the Copy Virtual Address */
-	TI_Fee_AddressType Fee_oCurrentAddress;			 		/* Indicates the current address of the Virtual 
-	                                                           Sector Header being written */
 	TI_Fee_AddressType Fee_oCurrentStartAddress;		 	/* Start Address of the Previous Block	 */
 	TI_Fee_AddressType Fee_oCurrentBlockHeader;		 		/* Start Address of the Block which is being currently 
 	                                                           written*/
@@ -275,7 +294,6 @@ typedef struct
 	                                                           been copied from Active to Copy VS */
 	uint8 Fee_u8VirtualSectorStart;							/* Index of the Start Sector of the VS */
 	uint8 Fee_u8VirtualSectorEnd;							/* Index of the End Sector of the VS */
-	uint32 Fee_u32DataWrite;						  	  	/* Data to be written to the VS */
 	uint32 Fee_au32VirtualSectorStateValue[TI_FEE_VIRTUAL_SECTOR_OVERHEAD >> 2U];  		/* Array to store the Virtual 
 	                                                                                       Sector Header and 
 																						   Information record */
@@ -284,13 +302,9 @@ typedef struct
 	uint32 Fee_au32VirtualSectorEraseCount[TI_FEE_NUMBER_OF_VIRTUAL_SECTORS]; 	 		/* Array to store the erase 
 	                                                                                       count of each Virtual 
 																						   Sector*/
-	TI_Fee_AddressType Fee_au32BlockOffset[TI_FEE_NUMBER_OF_BLOCKS][(1U<< TI_FEE_DATASELECT_BITS)]; /* Array to store 
-	                                                                                                   the Block Offset 
-																									   within the VS */
-	uint32 Fee_au32BlockHeader[TI_FEE_BLOCK_OVERHEAD >> 2U];								/* Array to store the Block
-                                                                                               Header value */
-	uint8  Fee_au8BlockCopyStatus[TI_FEE_NUMBER_OF_BLOCKS][(1U<<TI_FEE_DATASELECT_BITS)]; 	/* Array to store 
-	                                                                                           block copy status */
+	uint16 Fee_au16BlockOffset[TI_FEE_TOTAL_BLOCKS_DATASETS]; 		/* Array to store within the VS */
+	uint32 Fee_au32BlockHeader[TI_FEE_BLOCK_OVERHEAD >> 2U];		/* Array to store the Block Header value */
+	uint8  Fee_au8BlockCopyStatus[TI_FEE_TOTAL_BLOCKS_DATASETS]; 	/* Array to storeblock copy status */
 	uint8 Fee_u8InternalVirtualSectorStart;			/* Indicates internal VS start index */
     uint8 Fee_u8InternalVirtualSectorEnd;			/* Indicates internal VS end index */
 	TI_FeeModuleStatusType Fee_ModuleState;			/* Indicates the state of the FEE module */	
@@ -301,24 +315,18 @@ typedef struct
 	uint16 Fee_u16BlockIndex;						/* Index of the Current Block */			
 	uint16 Fee_u16BlockCopyIndex;					/* Index of the Block being copied from Copy to Active VS */
 	uint16 Fee_u16DataSetIndex;						/* Index of the Current DataSet */
+	uint16 Fee_u16ArrayIndex;						/* Index of the Current DataSet */
 	uint16 Fee_u16BlockSize;						/* Size of the current block in bytes */ 	
 	uint16 Fee_u16BlockSizeinBlockHeader;			/* Size of the current block. Used to write into Block Header */
 	uint16 Fee_u16BlockNumberinBlockHeader;			/* Number of the current block. Used to write into Block Header */
-	uint16 Fee_u16ActiveVirtualSector;				/* Indicates the FeeVirtualSectorNumber for the Active VS */
-	uint16 Fee_u16CopyVirtualSector;				/* Indicates the FeeVirtualSectorNumber for the Copy VS */
-	uint16 Fee_u16DataSetBits;						/* Indicates the number of bits in the Block Number used for 
-	                                                   DataSets */
-	uint16 Fee_u16InternalEraseQueue;				/* Indicates which VS can be erased when the FEE is in 
-	                                                   BusyInternal State*/
-	uint16 Fee_u16DataWriteCount;					/* Number of data bytes written */
-	uint16 Fee_u16CopyDataWriteCount;				/* Indicates number of copied bytes */
-	uint8 Fee_u8Bank;								/* Index of the Flash Bank used for VS */
+	uint8  Fee_u8ActiveVirtualSector;				/* Indicates the FeeVirtualSectorNumber for the Active VS */
+	uint8  Fee_u8CopyVirtualSector;					/* Indicates the FeeVirtualSectorNumber for the Copy VS */
+	uint32 Fee_u32InternalEraseQueue;				/* Indicates which VS can be erased when the FEE is in
+	                                                   BusyInternal State*/		
 	uint8 Fee_u8WriteCopyVSHeader;					/* Indicates the number of bytes of the Copy VS Header being 
 	                                                   written */
 	uint8 Fee_u8WriteCount;							/* Indicates the number of bytes of the Block Header being 
-	                                                   written */
-	uint8 Fee_u8WriteSize;							/* Indicates the Write Size in bytes supported by the device */
-	uint8 Fee_u8Mode;								/* Indicates the Fee module's operation mode */		
+	                                                   written */		
 	uint8 * Fee_pu8ReadDataBuffer;					/* Pointer to read data */
 	uint8 * Fee_pu8ReadAddress;						/* Pointer to read address */
 	uint8 * Fee_pu8Data;							/* Pointer to the next data to be written to the VS */			
@@ -335,7 +343,7 @@ typedef struct
 	boolean Fee_bWriteStartProgram;					/* Indicates if start program block header needs to be written */
 	boolean Fee_bWritePartialBlockHeader;			/* Indicates if start program block header needs to be written */
 	#if (TI_FEE_NUMBER_OF_UNCONFIGUREDBLOCKSTOCOPY != 0U)
-	TI_Fee_AddressType Fee_au32UnConfiguredBlockAddress[TI_FEE_NUMBER_OF_UNCONFIGUREDBLOCKSTOCOPY];		/* Indicates 
+	uint16 Fee_au16UnConfiguredBlockAddress[TI_FEE_NUMBER_OF_UNCONFIGUREDBLOCKSTOCOPY];		/* Indicates 
 	                                                                          number of unconfigured blocks to copy */
 	uint8  Fee_au8UnConfiguredBlockCopyStatus[TI_FEE_NUMBER_OF_UNCONFIGUREDBLOCKSTOCOPY]; 	/* Array to store block 
 	                                                                                           copy status */
@@ -347,15 +355,24 @@ typedef struct
  *********************************************************************************************************************/
 /*  Fee Global Variables */
 extern const Fee_BlockConfigType Fee_BlockConfiguration[TI_FEE_NUMBER_OF_BLOCKS];
+#if (TI_FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC == STD_OFF)
 extern const Fee_VirtualSectorConfigType Fee_VirtualSectorConfiguration[TI_FEE_NUMBER_OF_VIRTUAL_SECTORS];
 extern const Device_FlashType Device_FlashDevice;
+#endif
+#if (TI_FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC == STD_ON)
+extern Fee_VirtualSectorConfigType Fee_VirtualSectorConfiguration[TI_FEE_NUMBER_OF_VIRTUAL_SECTORS];
+extern Device_FlashType Device_FlashDevice;
+extern uint8 TI_Fee_MaxSectors;
+#endif
 extern TI_Fee_GlobalVarsType TI_Fee_GlobalVariables[TI_FEE_NUMBER_OF_EEPS];
 extern TI_Fee_StatusWordType_UN TI_Fee_oStatusWord[TI_FEE_NUMBER_OF_EEPS];
+#if(TI_FEE_FLASH_CRC_ENABLE == STD_ON)
 extern uint32 TI_Fee_u32FletcherChecksum;
+#endif
 extern uint32 TI_Fee_u32BlockEraseCount;
-extern uint16 TI_Fee_u16DataSets;
+extern uint8 TI_Fee_u8DataSets;
 extern uint8 TI_Fee_u8DeviceIndex;
-extern uint16 TI_Fee_u16ActCpyVS;
+extern uint32 TI_Fee_u32ActCpyVS;
 extern uint8 TI_Fee_u8ErrEraseVS;
 #if (TI_FEE_NUMBER_OF_UNCONFIGUREDBLOCKSTOCOPY != 0U)
 extern uint16 TI_Fee_u16NumberOfUnconfiguredBlocks[TI_FEE_NUMBER_OF_EEPS];
@@ -368,6 +385,7 @@ extern boolean Fee_bSingleBitError;
 extern TI_Fee_StatusWordType_UN TI_Fee_oStatusWord_Global;
 #endif
 extern boolean TI_Fee_FapiInitCalled; 
+extern boolean TI_Fee_bEraseSuspended;
 
 
 /**********************************************************************************************************************
@@ -389,6 +407,7 @@ extern void TI_Fee_MainFunction(void);
 extern TI_Fee_ErrorCodeType TI_FeeErrorCode(uint8 u8EEPIndex);
 extern void TI_Fee_ErrorRecovery(TI_Fee_ErrorCodeType ErrorCode, uint8 u8VirtualSector);
 extern TI_FeeJobResultType TI_Fee_GetJobResult(uint8 u8EEPIndex);
+extern void TI_Fee_SuspendResumeErase(TI_Fee_EraseCommandType Command);
 
 #if(TI_FEE_FLASH_ERROR_CORRECTION_HANDLING == TI_Fee_Fix)
 extern void TI_Fee_ErrorHookSingleBitError(void);
@@ -403,7 +422,7 @@ extern Std_ReturnType TI_Fee_ReadSync(uint16 BlockNumber,uint16 BlockOffset,uint
 #endif
 
 /*  TI Fee Internal Functions */
-TI_Fee_AddressType TI_FeeInternal_GetNextFlashAddress(uint8 u8EEPIndex, uint16 BlockNumber, uint16 DataSetNumber);
+TI_Fee_AddressType TI_FeeInternal_GetNextFlashAddress(uint8 u8EEPIndex);
 TI_Fee_AddressType TI_FeeInternal_AlignAddressForECC(TI_Fee_AddressType oAddress); 
 TI_Fee_AddressType TI_FeeInternal_GetCurrentBlockAddress(uint16 BlockNumber,uint16 DataSetNumber, uint8 u8EEPIndex);
 /*SAFETYMCUSW 61 X MR:1.4,5.1 <APPROVED> "Reason -  TI_FeeInternal_GetVirtualSectorParameter name is required here."*/
@@ -412,11 +431,9 @@ uint32 TI_FeeInternal_GetVirtualSectorParameter(Fapi_FlashSectorType oSector, ui
 uint32 TI_FeeInternal_PollFlashStatus(void);
 uint16 TI_FeeInternal_GetBlockSize(uint16 BlockIndex);
 uint16 TI_FeeInternal_GetBlockIndex(uint16 BlockNumber);
-static uint16 TI_FeeInternal_FindInvalidVirtualSector(uint8 u8EEPIndex);
-static uint16 TI_FeeInternal_FindReadyForEraseVirtualSector(uint8 u8EEPIndex);
 uint16 TI_FeeInternal_GetDataSetIndex(uint16 BlockNumber);
 uint16 TI_FeeInternal_GetBlockNumber(uint16 BlockNumber);
-uint16 TI_FeeInternal_FindNextVirtualSector(uint8 u8EEPIndex);
+uint8 TI_FeeInternal_FindNextVirtualSector(uint8 u8EEPIndex);
 uint8 TI_FeeInternal_WriteDataF021(boolean bCopy,uint16 u16WriteSize, uint8 u8EEPIndex);
 boolean TI_FeeInternal_BlankCheck(uint32 u32StartAddress, uint32 u32EndAddress, uint16 u16Bank, uint8 u8EEPIndex);
 Std_ReturnType TI_FeeInternal_CheckReadParameters(uint32 u32BlockSize,uint16 BlockOffset, const uint8* DataBufferPtr,
@@ -424,28 +441,26 @@ Std_ReturnType TI_FeeInternal_CheckReadParameters(uint32 u32BlockSize,uint16 Blo
 Std_ReturnType TI_FeeInternal_CheckModuleState(uint8 u8EEPIndex);
 Std_ReturnType TI_FeeInternal_InvalidateErase(uint16 BlockNumber);
 TI_Fee_StatusType TI_FeeInternal_FeeManager(uint8 u8EEPIndex);
-void TI_FeeInternal_WriteVirtualSectorHeader(uint16 FeeVirtualSectorNumber, VirtualSectorStatesType VsState, 
+void TI_FeeInternal_WriteVirtualSectorHeader(uint8 FeeVirtualSectorNumber, VirtualSectorStatesType VsState, 
                                              uint8 u8EEPIndex) ;
 /*SAFETYMCUSW 61 X MR:1.4,5.1 <APPROVED> "Reason -  TI_FeeInternal_GetVirtualSectorIndex name is required here."*/
 void TI_FeeInternal_GetVirtualSectorIndex(Fapi_FlashSectorType oSectorStart, Fapi_FlashSectorType oSectorEnd, 
                                           uint16 u16Bank, boolean bOperation,  uint8 u8EEPIndex);
-static void TI_FeeInternal_ConfigureBlockHeader(uint8 u8EEPIndex, uint8 u8BlockState,uint16 Fee_BlockSize_u16,
-                                                uint16 u16BlockNumber);
-static void TI_FeeInternal_ConfigureVirtualSectorHeader(uint16  FeeVirtualSectorNumber, 
-                                                        VirtualSectorStatesType VsState,  uint8 u8EEPIndex);
 void TI_FeeInternal_WritePreviousBlockHeader(boolean bWrite, uint8 u8EEPIndex);
 void TI_FeeInternal_WriteBlockHeader(boolean bWrite, uint8 u8EEPIndex,uint16 Fee_BlockSize_u16,uint16 u16BlockNumber);
 void TI_FeeInternal_SetClearCopyBlockState(uint8 u8EEPIndex, boolean bSetClear);
 void TI_FeeInternal_SanityCheck(uint16 BlockSize, uint8 u8EEPIndex);
 void TI_FeeInternal_StartProgramBlock(uint8 u8EEPIndex);
-void TI_FeeInternal_UpdateBlockOffsetArray(uint8 u8EEPIndex, boolean bActCpyVS,uint16 u16VirtualSector);
+void TI_FeeInternal_UpdateBlockOffsetArray(uint8 u8EEPIndex, boolean bActCpyVS,uint8 u8VirtualSector);
 void TI_FeeInternal_WriteInitialize(TI_Fee_AddressType oFlashNextAddress, uint8* DataBufferPtr, uint8 u8EEPIndex);
-static void TI_FeeInternal_InvlalidateEraseInitialize(TI_Fee_AddressType oFlashNextAddress, uint8 u8EEPIndex);
-static void TI_FeeInternal_CopyInitialize(boolean bBlockStatus, TI_Fee_AddressType oFlashNextAddress, uint8 u8EEPIndex,
-                                          uint8 u8SingleBitError);
 void TI_FeeInternal_CheckForError(uint8 u8EEPIndex);
+void TI_FeeInternal_EnableRequiredFlashSector(uint32 u32VirtualSectorStartAddress);
+uint16 TI_FeeInternal_GetArrayIndex(uint16 BlockNumber, uint16 DataSetNumber, uint8 u8EEPIndex, boolean bCallContext);
 #if(TI_FEE_FLASH_CRC_ENABLE == STD_ON)
 uint32 TI_FeeInternal_Fletcher16( uint8 const *pu8data, uint16 u16Length);
+#endif
+#if (TI_FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC == STD_ON)
+void TI_FeeInternal_PopulateStructures(TI_Fee_DeviceType DeviceType);
 #endif
 #endif /* TI_FEE_H */
 /**********************************************************************************************************************

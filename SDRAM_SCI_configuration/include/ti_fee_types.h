@@ -80,6 +80,7 @@
 typedef	union 
 {	
 	uint16 Fee_u16StatusWord;	
+	#ifdef _BIG_ENDIAN
 	struct
 	{		
 		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
@@ -119,6 +120,48 @@ typedef	union
 		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
 		uint16 SingleBitError:1U;
 	}Fee_StatusWordType_ST;
+	#endif
+	#ifdef _LITTLE_ENDIAN
+	struct
+	{		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 SingleBitError:1U;
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 Initialized:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 Copy:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 InvalidateBlock:1U;			
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 EraseImmediate:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 WriteAsync:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 WriteSync:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 Read:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 ProgramFailed:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 ReadSync:1U;
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 Erase:1U;		
+		/*SAFETYMCUSW 42 S MR:3.5 <APPROVED> "Reason - Bit field declaration is necessary here."*/
+		/*SAFETYMCUSW 73 S MR:6.4 <APPROVED> "Reason - Bit field is declared as unsigned."*/
+		uint16 Reserved: 5U;
+	}Fee_StatusWordType_ST;
+	#endif
 }TI_Fee_StatusWordType_UN;
 
 typedef enum

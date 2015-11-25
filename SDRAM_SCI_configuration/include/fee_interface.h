@@ -144,6 +144,14 @@
 /*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_CHECK_BANK7_ACCESS is a symbolic constant."*/
 #define TI_FEE_CHECK_BANK7_ACCESS				FEE_CHECK_BANK7_ACCESS
 #endif
+/*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_TOTAL_BLOCKS_DATASETS is a symbolic constant."*/
+#define TI_FEE_TOTAL_BLOCKS_DATASETS			FEE_TOTAL_BLOCKS_DATASETS
+/*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_VIRTUALSECTOR_SIZE is a symbolic constant."*/
+#define TI_FEE_VIRTUALSECTOR_SIZE				FEE_VIRTUALSECTOR_SIZE
+/*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_PHYSICALSECTOR_SIZE is a symbolic constant."*/
+#define TI_FEE_PHYSICALSECTOR_SIZE				FEE_PHYSICALSECTOR_SIZE
+/*SAFETYMCUSW 79 S MR:19.4 <APPROVED> "Reason - FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC is a symbolic constant."*/
+#define TI_FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC	FEE_GENERATE_DEVICEANDVIRTUALSECTORSTRUC
 
 /*----------------------------------------------------------------------------*/
 /* Virtual Sector Configuration                                               */
