@@ -305,6 +305,8 @@ void     linDisableNotification(linBASE_t *lin, uint32 flags);
 void     linEnableLoopback(linBASE_t *lin, loopBackType_t Loopbacktype);
 void     linDisableLoopback(linBASE_t *lin);
 void     linGetConfigValue(lin_config_reg_t *config_reg, config_value_type_t type);
+uint32   linGetStatusFlag(linBASE_t *lin);
+void     linClearStatusFlag(linBASE_t *lin, uint32 flags);
 
 /** @fn void linNotification(linBASE_t *lin, uint32 flags)
 *   @brief Interrupt callback

@@ -202,6 +202,9 @@ void    i2cEnableLoopback(i2cBASE_t *i2c);
 void    i2cDisableLoopback(i2cBASE_t *i2c);
 void    i2cSetMode(i2cBASE_t *i2c, uint32 mode);
 void    i2cGetConfigValue(i2c_config_reg_t *config_reg, config_value_type_t type);
+void i2cSetDirection(i2cBASE_t *i2c, uint32 dir);
+bool i2cIsMasterReady(i2cBASE_t *i2c);
+bool i2cIsBusBusy(i2cBASE_t *i2c);
 
 /** @fn void i2cNotification(i2cBASE_t *i2c, uint32 flags)
 *   @brief Interrupt callback
