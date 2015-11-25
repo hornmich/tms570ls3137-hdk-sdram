@@ -87,9 +87,6 @@ void esmInit(void)
     esmREG->SSR2  = 0xFFFFFFFFU;
     esmREG->SR1[2U] = 0xFFFFFFFFU;
     esmREG->SR4[0U] = 0xFFFFFFFFU;
-    esmREG->SR4[1U] = 0xFFFFFFFFU;
-    esmREG->ESTATUS5EMU  = 0xFFFFFFFFU;
-    esmREG->SR4[2U] = 0xFFFFFFFFU;
 
     /** - Setup LPC preload */
     esmREG->LTCPR = 16384U - 1U;
@@ -489,9 +486,9 @@ void esmSetInterruptLevel(uint64 channels, uint64 flags)
 /* USER CODE BEGIN (19) */
 /* USER CODE END */
 
-    esmREG->ILCR4 = (uint32)(((channels & (~flags)) >> 32U) & 0xFFFFFFFU);
+    esmREG->ILCR4 = (uint32)(((channels & (~flags)) >> 32U) & 0xFFFFFFFFU);
     esmREG->ILSR4 = (uint32)(((channels & flags) >> 32U) & 0xFFFFFFFFU);
-    esmREG->ILCR1 = (uint32)((channels & (~flags)) & 0xFFFFFFFU);
+    esmREG->ILCR1 = (uint32)((channels & (~flags)) & 0xFFFFFFFFU);
     esmREG->ILSR1 = (uint32)((channels & flags) & 0xFFFFFFFFU);
 
 /* USER CODE BEGIN (20) */
@@ -515,8 +512,11 @@ void esmClearStatus(uint32 group, uint64 channels)
 /* USER CODE BEGIN (21) */
 /* USER CODE END */
 
-    esmREG->SR4[group] = (uint32)((channels >> 32U) & 0xFFFFFFFFU);
     esmREG->SR1[group] = (uint32)(channels & 0xFFFFFFFFU);
+	if(group == 0U)
+	{
+	    esmREG->SR4[group] = (uint32)((channels >> 32U) & 0xFFFFFFFFU);
+	}
 
 /* USER CODE BEGIN (22) */
 /* USER CODE END */
@@ -538,7 +538,6 @@ void esmClearStatusBuffer(uint64 channels)
 /* USER CODE BEGIN (23) */
 /* USER CODE END */
 
-    esmREG->ESTATUS5EMU = (uint32)((channels >> 32U) & 0xFFFFFFFFU);
     esmREG->SSR2 = (uint32)(channels & 0xFFFFFFFFU);
 
 /* USER CODE BEGIN (24) */
@@ -584,8 +583,16 @@ void esmSetCounterPreloadValue(uint32 value)
 uint64 esmGetStatus(uint32 group, uint64 channels)
 {
     uint64 status;
-	uint32 ESM_ESTATUS4 = esmREG->SR4[group];
-	uint32 ESM_ESTATUS1 = esmREG->SR1[group];
+	uint32 ESM_ESTATUS4, ESM_ESTATUS1;
+	if(group == 0U)
+	{
+		ESM_ESTATUS4 = esmREG->SR4[group];
+	}
+	else
+	{
+		ESM_ESTATUS4 = 0U;
+	}
+	ESM_ESTATUS1 = esmREG->SR1[group];
 
 /* USER CODE BEGIN (27) */
 /* USER CODE END */
@@ -613,12 +620,10 @@ uint64 esmGetStatus(uint32 group, uint64 channels)
 uint64 esmGetStatusBuffer(uint64 channels)
 {
     uint64 status;
-	uint32 ESM_ESTATUS5EMU = esmREG->ESTATUS5EMU;
-	uint32 ESM_SSR2 = esmREG->SSR2;
 
 /* USER CODE BEGIN (29) */
 /* USER CODE END */
-    status = (((uint64)(ESM_ESTATUS5EMU) << 32U) | (uint64)ESM_SSR2) & channels;
+    status = ((uint64)esmREG->SSR2) & channels;
 
 /* USER CODE BEGIN (30) */
 /* USER CODE END */
@@ -781,14 +786,8 @@ void esmHighInterrupt(void)
         esmREG->SR4[0U] = (uint32)1U << (vec-64U);
         esmGroup1Notification(vec-32U);
     }
-    else if (vec < 128U)
-    {
-        esmREG->SR4[1U] = (uint32)1U << (vec-96U);
-        esmGroup2Notification(vec-64U);
-    }
     else
     {
-        esmREG->SR4[1U] = 0xFFFFFFFFU;
         esmREG->SR4[0U] = 0xFFFFFFFFU;
         esmREG->SR1[1U] = 0xFFFFFFFFU;
         esmREG->SR1[0U] = 0xFFFFFFFFU;

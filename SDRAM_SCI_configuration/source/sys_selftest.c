@@ -137,7 +137,7 @@ void ccmSelfCheck(void)
                 esmREG->SR1[1U] = 0x4U;
 
                 /* clear ESM group2 shadow status flag */
-                esmREG->ESTATUS5EMU = 0x4U;
+                esmREG->SSR2 = 0x4U;
 
                 /* ESM self-test error needs to also be cleared */
                 esmREG->SR1[0U] = 0x80000000U;
@@ -308,7 +308,7 @@ void cpuSelfTest(uint32 no_of_intervals, uint32 max_timeout, boolean restart_tes
 void pbistSelfCheck(void)
 {
     volatile uint32 i = 0U;
-    uint32 PBIST_FSRF0, PBIST_FSRF1, PBIST_wait_done_loop = 0U;
+    uint32 PBIST_wait_done_loop = 0U;
 /* USER CODE BEGIN (13) */
 /* USER CODE END */
     /* Run a diagnostic check on the memory self-test controller */
@@ -375,9 +375,7 @@ void pbistSelfCheck(void)
     }/* Wait */
 
     /* Check for the failure */
-    PBIST_FSRF0 = pbistREG->FSRF0;
-    PBIST_FSRF1 = pbistREG->FSRF1;
-    if (((PBIST_FSRF0 & 0x1U) != 0x1U) && ((PBIST_FSRF1 & 0x1U) != 0x1U))
+    if ((pbistREG->FSRF0 & 0x1U) != 0x1U)
     {
         /* No failure was indicated even if the always fail algorithm was run*/
         selftestFailNotification(PBISTSELFCHECK_FAIL1);
@@ -522,10 +520,8 @@ boolean pbistIsTestPassed(void)
 /* USER CODE BEGIN (24) */
 /* USER CODE END */
 	boolean status;
-	uint32 port0Fail = pbistREG->FSRF0;
-	uint32 port1Fail = pbistREG->FSRF1;
 
-    if ((port0Fail == 0U) && (port1Fail == 0U))
+    if (pbistREG->FSRF0 == 0U)
 	{
 		status = TRUE;
 	}
@@ -560,7 +556,8 @@ boolean pbistPortTestStatus(uint32 port)
     }
     else
     {
-      status =  (pbistREG->FSRF1 == 0U);
+      /* Invalid Input */
+      status =  FALSE;
     }
 
     return  status;
@@ -2406,7 +2403,7 @@ void checkPLL2Slip(void)
 /* Requirements : HL_SR409 */
 void checkRAMAddrParity(void)
 {
-    register volatile uint64 ramread;
+    register uint64 ramread;
 	volatile uint32 regread;
 	uint32 tcram1ErrStat, tcram2ErrStat;
 	
@@ -2416,7 +2413,7 @@ void checkRAMAddrParity(void)
 
     /* Read from both RAM banks */
     ramread = tcramA1bit;
-    ramread = tcramB1bit;
+    ramread = ramread | tcramB1bit; /* XOR-ing with ramread to avoid warnings */
 
     /* Switch back to Address parity scheme */
     tcram1REG->RAMCTRL = 0x0005000AU;
@@ -2602,21 +2599,15 @@ void fmcBus1ParityCheck(void)
 /* Requirements : HL_SR401 */
 void pbistFail(void)
 {
-    uint32 PBIST_RAMT, PBIST_FSRA0, PBIST_FSRDL0, PBIST_FSRA1, PBIST_FSRDL1;
+    uint32 PBIST_RAMT, PBIST_FSRA0, PBIST_FSRDL0;
     /*SAFETYMCUSW 134 S MR:12.2 <APPROVED> "LDRA Tool issue" */
     PBIST_RAMT = pbistREG->RAMT;
     PBIST_FSRA0 = pbistREG->FSRA0;
     PBIST_FSRDL0 = pbistREG->FSRDL0;
-    PBIST_FSRA1 = pbistREG->FSRA1;
-    PBIST_FSRDL1 = pbistREG->FSRDL1;
 
     if(pbistPortTestStatus((uint32)PBIST_PORT0) != TRUE)
     {
         memoryPort0TestFailNotification((uint32)((PBIST_RAMT & 0xFF000000U) >> 24U), (uint32)((PBIST_RAMT & 0x00FF0000U) >> 16U),(uint32)PBIST_FSRA0, (uint32)PBIST_FSRDL0);
-    }
-    else if(pbistPortTestStatus((uint32)PBIST_PORT1) != TRUE)
-    {
-        memoryPort1TestFailNotification((uint32)((PBIST_RAMT & 0xFF000000U) >> 24U), (uint32)((PBIST_RAMT & 0x00FF0000U) >> 16U), (uint32)PBIST_FSRA1, (uint32)PBIST_FSRDL1);
     }
     else
     {
@@ -2951,9 +2942,9 @@ void enableParity(void)
 {
     DMA_PARCR = 0xAU;                      /* Enable DMA RAM parity */
     VIM_PARCTL = 0xAU;                     /* Enable VIM RAM parity */
-    canREG1->CTL = (uint32)0xAU << 10U;    /* Enable CAN1 RAM parity */
-    canREG2->CTL = (uint32)0xAU << 10U;    /* Enable CAN2 RAM parity */
-    canREG3->CTL = (uint32)0xAU << 10U;    /* Enable CAN3 RAM parity */
+    canREG1->CTL = ((uint32)0xAU << 10U) | 1U;    /* Enable CAN1 RAM parity */
+    canREG2->CTL = ((uint32)0xAU << 10U) | 1U;    /* Enable CAN2 RAM parity */
+    canREG3->CTL = ((uint32)0xAU << 10U) | 1U;    /* Enable CAN3 RAM parity */
     adcREG1->PARCR = 0xAU;                 /* Enable ADC1 RAM parity */
     adcREG2->PARCR = 0xAU;                 /* Enable ADC2 RAM parity */
     hetREG1->PCR = 0xAU;                   /* Enable HET1 RAM parity */
@@ -2974,9 +2965,9 @@ void disableParity(void)
 {
     DMA_PARCR = 0x5U;                      /* Disable DMA RAM parity */
     VIM_PARCTL = 0x5U;                     /* Disable VIM RAM parity */
-    canREG1->CTL = (uint32)0x5U << 10U;    /* Disable CAN1 RAM parity */
-    canREG2->CTL = (uint32)0x5U << 10U;    /* Disable CAN2 RAM parity */
-    canREG3->CTL = (uint32)0x5U << 10U;    /* Disable CAN3 RAM parity */
+    canREG1->CTL = ((uint32)0x5U << 10U) | 1U;    /* Disable CAN1 RAM parity */
+    canREG2->CTL = ((uint32)0x5U << 10U) | 1U;    /* Disable CAN2 RAM parity */
+    canREG3->CTL = ((uint32)0x5U << 10U) | 1U;    /* Disable CAN3 RAM parity */
     adcREG1->PARCR = 0x5U;                 /* Disable ADC1 RAM parity */
     adcREG2->PARCR = 0x5U;                 /* Disable ADC2 RAM parity */
     hetREG1->PCR = 0x5U;                   /* Disable HET1 RAM parity */

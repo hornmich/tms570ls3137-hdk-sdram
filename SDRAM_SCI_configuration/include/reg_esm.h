@@ -90,7 +90,6 @@ typedef volatile struct esmBase
     uint32 ILSR4;             /* 0x0050                 */
     uint32 ILCR4;             /* 0x0054                 */
     uint32 SR4[3U];           /* 0x0058, 0x005C, 0x0060 */
-    uint32 ESTATUS5EMU;       /* 0x0064                 */
 } esmBASE_t;
 
 /** @def esmREG
