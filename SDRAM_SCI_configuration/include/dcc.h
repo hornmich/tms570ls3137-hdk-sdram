@@ -86,7 +86,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_PLL1 0x0000A0000U
+#define dcc1CNT1_CLKSRC_PLL1 0x0000A000U
 
 /** @def dcc1CNT1_CLKSRC_PLL2
 *   @brief Alias name for DCC1 Counter 1 Clock Source PLL2
@@ -95,7 +95,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_PLL2 0x0000A0001U
+#define dcc1CNT1_CLKSRC_PLL2 0x0000A001U
 
 /** @def dcc1CNT1_CLKSRC_LFLPO
 *   @brief Alias name for DCC1 Counter 1 Clock Source LFLPO
@@ -104,7 +104,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_LFLPO 0x0000A0002U
+#define dcc1CNT1_CLKSRC_LFLPO 0x0000A002U
 
 /** @def dcc1CNT1_CLKSRC_HFLPO
 *   @brief Alias name for DCC1 Counter 1 Clock Source HFLPO
@@ -113,7 +113,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_HFLPO 0x0000A0003U
+#define dcc1CNT1_CLKSRC_HFLPO 0x0000A003U
 
 /** @def dcc1CNT1_CLKSRC_EXTCLKIN1
 *   @brief Alias name for DCC1 Counter 1 Clock Source EXTCLKIN1
@@ -122,7 +122,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_EXTCLKIN1 0x0000A0005U
+#define dcc1CNT1_CLKSRC_EXTCLKIN1 0x0000A005U
 
 /** @def dcc1CNT1_CLKSRC_EXTCLKIN2
 *   @brief Alias name for DCC1 Counter 1 Clock Source EXTCLKIN2
@@ -131,7 +131,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_EXTCLKIN2 0x0000A0006U
+#define dcc1CNT1_CLKSRC_EXTCLKIN2 0x0000A006U
 
 /** @def dcc1CNT1_CLKSRC_VCLK
 *   @brief Alias name for DCC1 Counter 1 Clock Source VCLK
@@ -140,7 +140,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_VCLK 0x0000A0008U
+#define dcc1CNT1_CLKSRC_VCLK 0x0000A008U
 
 /** @def dcc1CNT1_CLKSRC_N2HET1_31
 *   @brief Alias name for DCC1 Counter 1 Clock Source N2HET1_31
@@ -149,7 +149,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc1CNT1_CLKSRC_N2HET1_31 0x00005000FU
+#define dcc1CNT1_CLKSRC_N2HET1_31 0x0000500FU
 
 /** @def dcc2CNT0_CLKSRC_TCK
 *   @brief Alias name for DCC2 Counter 0 Clock Source TCK
@@ -176,7 +176,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc2CNT1_CLKSRC_VCLK 0x0000A0008U
+#define dcc2CNT1_CLKSRC_VCLK 0x0000A008U
 
 /** @def dcc2CNT1_CLKSRC_N2HET1_0
 *   @brief Alias name for DCC2 Counter 1 Clock Source N2HET2_0
@@ -185,7 +185,7 @@ extern "C" {
 *
 *   @note This value should be used for API argument @a cnt1_Clock_Source
 */
-#define dcc2CNT1_CLKSRC_N2HET1_0 0x00005000FU
+#define dcc2CNT1_CLKSRC_N2HET1_0 0x0000500FU
 
 /** @def dccNOTIFICATION_DONE
 *   @brief Alias name for DCC Done notification
