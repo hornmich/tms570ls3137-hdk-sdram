@@ -74,7 +74,7 @@ typedef volatile struct pbistBase
     uint32 OVER;            /* 0x0188: Override Register */
     uint32   rsvd2;         /* 0x018C */
     uint32 FSRF0;           /* 0x0190: Fail Status Fail Register 0 */
-    uint32 FSRF1;           /* 0x0194: Fail Status Fail Register 1 */
+    uint32 rsvd5;           /* 0x0194 */
     uint32 FSRC0;           /* 0x0198: Fail Status Count Register 0 */
     uint32 FSRC1;           /* 0x019C: Fail Status Count Register 1 */
     uint32 FSRA0;           /* 0x01A0: Fail Status Address 0 Register */

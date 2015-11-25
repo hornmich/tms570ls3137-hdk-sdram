@@ -209,7 +209,7 @@ extern "C" {
 #define PINMUX_BALL_E18_MASK            (~(uint32)((uint32)0xFFU << PINMUX_BALL_E18_SHIFT))
 #define PINMUX_BALL_E19_MASK            (~(uint32)((uint32)0xFFU << PINMUX_BALL_E19_SHIFT))
 #define PINMUX_BALL_F3_MASK             (~(uint32)((uint32)0xFFU << PINMUX_BALL_F3_SHIFT))
-#define PINMUX_BALL_F5_MASK             (~(uint32)((uint32)0xFFU << PINMUX_BALL_F4_SHIFT))
+#define PINMUX_BALL_F5_MASK             (~(uint32)((uint32)0xFFU << PINMUX_BALL_F5_SHIFT))
 #define PINMUX_BALL_G3_MASK             (~(uint32)((uint32)0xFFU << PINMUX_BALL_G3_SHIFT))
 #define PINMUX_BALL_G5_MASK             (~(uint32)((uint32)0xFFU << PINMUX_BALL_G4_SHIFT))
 #define PINMUX_BALL_G16_MASK            (~(uint32)((uint32)0xFFU << PINMUX_BALL_G16_SHIFT))

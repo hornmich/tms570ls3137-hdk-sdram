@@ -80,6 +80,8 @@ typedef volatile struct gioBase
     uint32 FLG;       /**< 0x0020: Interrupt Flag Register */
     uint32 OFF1;      /**< 0x0024: Interrupt Offset A Register */
     uint32 OFF2;      /**< 0x0028: Interrupt Offset B Register */
+    uint32 EMU1;      /**< 0x002C: Emulation 1 Register */
+	uint32 EMU2;      /**< 0x0030: Emulation 2 Register */
 } gioBASE_t;
 
 
