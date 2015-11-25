@@ -48,6 +48,9 @@
 
 #include "reg_dma.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* USER CODE BEGIN (1) */
 /* USER CODE END */
 
@@ -357,4 +360,8 @@ void dmaGroupANotification(dmaInterrupt_t inttype, uint32 channel);
 /* USER CODE END */
 
 /**@}*/
+#ifdef __cplusplus
+}
+#endif
+
 #endif

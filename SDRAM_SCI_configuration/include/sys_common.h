@@ -92,6 +92,13 @@ typedef enum config_value_type
 	CurrentValue
 }config_value_type_t;
 
+#ifndef __little_endian__
+#define __little_endian__  0
+#endif
+#ifndef __LITTLE_ENDIAN__
+#define __LITTLE_ENDIAN__  0
+#endif
+
 /* USER CODE BEGIN (1) */
 /* USER CODE END */
 

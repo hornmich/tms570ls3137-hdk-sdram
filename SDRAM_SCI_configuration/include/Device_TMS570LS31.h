@@ -101,8 +101,8 @@
 #define _PLATFORM_TYPES_H_
 #endif
 #include "F021.h"
-#include "Std_Types.h"
-#include "Device_Types.h"
+#include "hal_stdtypes.h"
+#include "Device_types.h"
 
 #endif /* DEVICE_TMS570LS31x_H */
 

@@ -113,6 +113,41 @@ typedef double float64;
 #endif
 
 
+typedef uint8 Std_ReturnType;
+
+typedef struct
+{
+    uint16 vendorID;
+    uint16 moduleID;
+    uint8  instanceID;
+    uint8  sw_major_version;
+    uint8  sw_minor_version;
+    uint8  sw_patch_version;
+} Std_VersionInfoType;
+
+/*****************************************************************************/
+/* SYMBOL DEFINITIONS                                                        */
+/*****************************************************************************/
+#ifndef STATUSTYPEDEFINED
+  #define STATUSTYPEDEFINED
+  #define E_OK     0x00
+
+  typedef unsigned char StatusType;
+#endif
+
+#ifndef E_NOT_OK
+#define E_NOT_OK   0x01
+#endif
+
+#ifndef STD_ON
+#define STD_ON     0x01
+#endif
+
+#ifndef STD_OFF
+#define STD_OFF    0x00
+#endif
+
+
 /************************************************************/
 /* Global Definitions                                       */
 /************************************************************/
@@ -123,6 +158,14 @@ typedef double float64;
 #ifndef NULL
 	/*SAFETYMCUSW 218 S MR:20.2 <APPROVED> "Custom Type Definition." */
     #define NULL ((void *) 0U)
+#endif
+
+/*****************************************************************************/
+/* Define:       NULL_PTR                                                    */
+/* Description:  Void pointer to 0                                           */
+/*****************************************************************************/
+#ifndef NULL_PTR
+	#define NULL_PTR ((void *)0x0)
 #endif
 
 /** @def TRUE
@@ -137,6 +180,14 @@ typedef double float64;
 */
 #ifndef FALSE
     #define FALSE false
+#endif
+
+/*****************************************************************************/
+/* Define:       NULL_PTR                                                    */
+/* Description:  Void pointer to 0                                           */
+/*****************************************************************************/
+#ifndef NULL_PTR
+#define NULL_PTR ((void *)0x0)
 #endif
 
 /* USER CODE BEGIN (1) */

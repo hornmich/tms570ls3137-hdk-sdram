@@ -77,7 +77,7 @@ extern void __TI_auto_init(void);
 extern void main(void);
 /*SAFETYMCUSW 122 S MR:20.11 <APPROVED> "Startup code(exit and abort need to be present)" */
 /*SAFETYMCUSW 354 S MR:NA <APPROVED> " Startup code(Extern declaration present in the library)" */
-extern void exit(void);
+extern void exit(int _status);
 
 
 /* USER CODE BEGIN (3) */
@@ -652,7 +652,7 @@ void _c_int00(void)
 /* USER CODE BEGIN (76) */
 /* USER CODE END */
 /*SAFETYMCUSW 122 S MR:20.11 <APPROVED> "Startup code(exit and abort need to be present)" */
-    exit();
+    exit(0);
 
 /* USER CODE BEGIN (77) */
 /* USER CODE END */
